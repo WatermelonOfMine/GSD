@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chaoxing.gsd.modules.entity.LiteratureCompDetail;
 import com.chaoxing.gsd.modules.service.LiteratureCompService;
 import com.chaoxing.gsd.web.res.BaseResponse;
+
 /**
  * 文献对比入口
+ * 
  * @author winsl
  *
  */
@@ -28,96 +30,136 @@ public class LiteratureCompController {
 
 	@Autowired
 	private LiteratureCompService literatureCompService;
-	
+
 	/**
 	 * 创建对比标签
+	 * 
 	 * @param userid
 	 * @param labelname
 	 * @return
 	 */
 	@POST
-    @RequestMapping("/createLabel")
-    @ResponseBody
-    public BaseResponse createLabel(@RequestParam(value = "userid", required = true) String userid,
-                                       @RequestParam(value = "labelname", required = true) String labelname){
+	@RequestMapping("/createLabel")
+	@ResponseBody
+	public BaseResponse createLabel(@RequestParam(value = "userid", required = true) String userid,
+			@RequestParam(value = "labelname", required = true) String labelname) {
 		BaseResponse rsp = literatureCompService.createLabel(labelname, userid);
-        return rsp;
-    }
-	
+		return rsp;
+	}
+
+	/**
+	 * 删除对比标签
+	 * 
+	 * @param labelid
+	 * @return
+	 */
 	@DELETE
-    @RequestMapping("/deleteLabel")
-    @ResponseBody
-    public BaseResponse deleteLabel(@RequestParam(value = "labelid", required = true) Integer labelid){
+	@RequestMapping("/deleteLabel")
+	@ResponseBody
+	public BaseResponse deleteLabel(@RequestParam(value = "labelid", required = true) Integer labelid) {
 		BaseResponse rsp = literatureCompService.deleteLabel(labelid);
-        return rsp;
-    }
-	
+		return rsp;
+	}
+
+	/**
+	 * 更新对比标签
+	 * 
+	 * @param labelid
+	 * @param labelname
+	 * @return
+	 */
 	@PUT
-    @RequestMapping("/updateLabel")
-    @ResponseBody
-    public BaseResponse updateLabel(@RequestParam(value = "labelid", required = true) Integer labelid,
-                                       @RequestParam(value = "labelname", required = true) String labelname){
+	@RequestMapping("/updateLabel")
+	@ResponseBody
+	public BaseResponse updateLabel(@RequestParam(value = "labelid", required = true) Integer labelid,
+			@RequestParam(value = "labelname", required = true) String labelname) {
 		BaseResponse rsp = literatureCompService.updateLabel(labelid, labelname);
-        return rsp;
-    }
-	
+		return rsp;
+	}
+
+	/**
+	 * 查询标签
+	 * 
+	 * @param userid
+	 * @return
+	 */
 	@GET
-    @RequestMapping("/queryLabels")
-    @ResponseBody
-    public BaseResponse queryLabels(@RequestParam(value = "userid", required = true) String userid){
+	@RequestMapping("/queryLabels")
+	@ResponseBody
+	public BaseResponse queryLabels(@RequestParam(value = "userid", required = true) String userid) {
 		BaseResponse rsp = literatureCompService.queryLabels(userid);
-        return rsp;
-    }
-	
+		return rsp;
+	}
+
+	/**
+	 * 往对比标签中插入详情
+	 * 
+	 * @param data
+	 * @return
+	 */
 	@POST
-    @RequestMapping("/insertDetails")
-    @ResponseBody
-    public BaseResponse insertDetails(@RequestBody List<LiteratureCompDetail> data){
+	@RequestMapping("/insertDetails")
+	@ResponseBody
+	public BaseResponse insertDetails(@RequestBody List<LiteratureCompDetail> data) {
 		BaseResponse rsp = new BaseResponse();
-		if(null != data)
-		{
+		if (null != data) {
 			rsp = literatureCompService.insertDetails(data);
-		}
-		else
-		{
+		} else {
 			rsp.setStatu(false);
 			rsp.setMsg("your input parameter is wrong, please check!!!");
 		}
-        return rsp;
-    }
-	
+		return rsp;
+	}
+
+	/**
+	 * 更新标签设置
+	 * 
+	 * @param labelid
+	 * @param filedsnamecn
+	 * @param filedids
+	 * @return
+	 */
 	@POST
-    @RequestMapping("/updateLabelShowSetting")
-    @ResponseBody
-    public BaseResponse updateLabelShowSetting(@RequestParam(value = "labelid", required = true) Integer labelid,
-                                       @RequestParam(value = "filedsnamecn", required = false) String filedsnamecn, 
-                                       @RequestParam(value = "filedids", required = false) String filedids){
+	@RequestMapping("/updateLabelShowSetting")
+	@ResponseBody
+	public BaseResponse updateLabelShowSetting(@RequestParam(value = "labelid", required = true) Integer labelid,
+			@RequestParam(value = "filedsnamecn", required = false) String filedsnamecn,
+			@RequestParam(value = "filedids", required = false) String filedids) {
 		BaseResponse rsp = literatureCompService.updateLabelShowSetting(labelid, filedsnamecn, filedids);
-        return rsp;
-    }
-	
+		return rsp;
+	}
+
+	/**
+	 * 删除标签内详情
+	 * 
+	 * @param data
+	 * @return
+	 */
 	@DELETE
-    @RequestMapping("/deleteDetails")
-    @ResponseBody
-    public BaseResponse deleteDetails(@RequestBody List<LiteratureCompDetail> data){
+	@RequestMapping("/deleteDetails")
+	@ResponseBody
+	public BaseResponse deleteDetails(@RequestBody List<LiteratureCompDetail> data) {
 		BaseResponse rsp = new BaseResponse();
-		if(null != data)
-		{
+		if (null != data) {
 			rsp = literatureCompService.deleteDetails(data);
-		}
-		else
-		{
+		} else {
 			rsp.setStatu(false);
 			rsp.setMsg("your input parameter is wrong, please check!!!");
 		}
-        return rsp;
-    }
-	
+		return rsp;
+	}
+
+	/**
+	 * 查询标签下详情
+	 * 
+	 * @param labelid
+	 * @return
+	 */
 	@GET
-    @RequestMapping("/queryDetails")
-    @ResponseBody
-    public BaseResponse queryDetails(@RequestParam(value = "labelid", required = true) Integer labelid){
+	@RequestMapping("/queryDetails")
+	@ResponseBody
+	public BaseResponse queryDetails(@RequestParam(value = "labelid", required = true) Integer labelid) {
 		BaseResponse rsp = literatureCompService.queryDetails(labelid);
-        return rsp;
-    }
+		return rsp;
+	}
 }

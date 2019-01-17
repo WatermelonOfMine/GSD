@@ -3,7 +3,6 @@ package com.chaoxing.gsd.core.utils;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -26,6 +25,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.sun.mail.imap.IMAPFolder;
 
@@ -35,31 +35,11 @@ import com.sun.mail.imap.IMAPFolder;
  * @author winsl
  *
  */
+@Component
 public class MailUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(MailUtil.class);
 
-	public static final Properties properties = new Properties();
-	
-	public static final List<String> GSD_INQUIRY_MAIL = new ArrayList<String>();
-	
-	public static final List<String> CC_MAIL_TO = new ArrayList<String>();
-	
-	static
-	{
-		properties.setProperty("mail.store.protocol", "imap");
-		properties.setProperty("mail.imap.host", "imap.exmail.qq.com");
-		properties.setProperty("mail.imap.port", "143");
-		properties.setProperty("mail.smtp.host", "smtp.exmail.qq.com");
-		properties.setProperty("mail.smtp.port", "25");
-		properties.setProperty("userName", "gsd@chaoxing.com");
-		properties.setProperty("passWord", "2012Qk");
-		
-		GSD_INQUIRY_MAIL.add("gsd-inquiry@chaoxing.com");
-		CC_MAIL_TO.add("xiaodengbing@chaoxing.com");
-		CC_MAIL_TO.add("yangjing0710@chaoxing.com");
-	}
-	
 	/**
 	 * 邮件回复
 	 * @param properties 配置

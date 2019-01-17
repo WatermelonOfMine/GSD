@@ -10,6 +10,7 @@ public class KCException extends RuntimeException{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	/** http请求状态码**/
 	int httpStatus;
 	

@@ -8,11 +8,10 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 //import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-
 @SpringBootApplication
-//缓存
-//@EnableCaching
-//定时任务
+// 缓存
+// @EnableCaching
+// 定时任务
 @EnableScheduling
 @MapperScan("com.chaoxing.gsd")
 public class ScriptRunnerApplication extends SpringBootServletInitializer {
@@ -26,7 +25,5 @@ public class ScriptRunnerApplication extends SpringBootServletInitializer {
 		System.setProperty("es.set.netty.runtime.available.processors", "false");
 		SpringApplication.run(ScriptRunnerApplication.class, args);
 	}
-
-
 
 }

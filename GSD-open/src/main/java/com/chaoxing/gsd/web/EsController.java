@@ -17,90 +17,78 @@ import java.util.List;
 
 @RequestMapping("/gsd/es")
 @RestController
-public class EsController  {
-	
-private static Logger logger = LoggerFactory.getLogger(EsController.class);
+public class EsController {
 
+	private static Logger logger = LoggerFactory.getLogger(EsController.class);
 
 	@Autowired
-    private EsService esService;
+	private EsService esService;
 
-    @Autowired
-    private RsService rsService;
+	@Autowired
+	private RsService rsService;
 
-
-
-    /**
-     *@author heyang
-     *@param ${indexName}  索引名称
-     *@param ${firstGroup}  一级分类
-     *describe: 桶嵌套
-     */
+	/**
+	 * @author heyang
+	 * @param ${indexName}
+	 *            索引名称
+	 * @param ${firstGroup}
+	 *            一级分类 describe: 桶嵌套
+	 */
 	@POST
-    @RequestMapping("/searchclusters3")
-    public BaseResponse searchClusters3(@RequestParam(value = "indexName") String indexName,
-                                        @RequestParam(value = "content") String content,
-                                        @RequestParam(value = "firstGroup") String firstGroup,
-                                        SearchArgumentBean searchArgumentBean
-                                        ) {
-        BaseResponse rsp = new BaseResponse();
-        try {
-            List<String> sanfangIndexNames = rsService.getSanfangIndexNames();
-            if(sanfangIndexNames.contains(indexName)){
-                rsp.setData(esService.searchClusters( indexName,searchArgumentBean.getField(),content,  firstGroup,
-                        searchArgumentBean.getSecondGroup(),searchArgumentBean.getThirdGroup()));
-                rsp.setStatu(true);
-            }else{
-                rsp.setStatu(false);
-                rsp.setMsg("不存在的索引");
-            }
+	@RequestMapping("/searchclusters3")
+	public BaseResponse searchClusters3(@RequestParam(value = "indexName") String indexName,
+			@RequestParam(value = "content") String content, @RequestParam(value = "firstGroup") String firstGroup,
+			SearchArgumentBean searchArgumentBean) {
+		BaseResponse rsp = new BaseResponse();
+		try {
+			List<String> sanfangIndexNames = rsService.getSanfangIndexNames();
+			if (sanfangIndexNames.contains(indexName)) {
+				rsp.setData(esService.searchClusters(indexName, searchArgumentBean.getField(), content, firstGroup,
+						searchArgumentBean.getSecondGroup(), searchArgumentBean.getThirdGroup()));
+				rsp.setStatu(true);
+			} else {
+				rsp.setStatu(false);
+				rsp.setMsg("不存在的索引");
+			}
 
-        } catch (Exception e) {
-            logger.error("searchClusters3 error happend: {}", e);
-            rsp = BaseRes.getErrorResponse();
-        }
-        return rsp;
+		} catch (Exception e) {
+			logger.error("searchClusters3 error happend: {}", e);
+			rsp = BaseRes.getErrorResponse();
+		}
+		return rsp;
 
-    }
+	}
 
+	/**
+	 * @author heyang
+	 * @param ${indexName}
+	 *            索引名称
+	 * @param ${firstGroup}
+	 *            一级分类 describe: 桶嵌套扁平化数据版本
+	 */
+	@POST
+	@RequestMapping("/searchclusters4")
+	public BaseResponse searchClusters4(@RequestParam(value = "indexName") String indexName,
+			@RequestParam(value = "content") String content, @RequestParam(value = "firstGroup") String firstGroup,
+			@RequestParam(value = "secondGroup") String secondGroup,
+			@RequestParam(value = "thirdGroup") String thirdGroup) {
+		BaseResponse rsp = new BaseResponse();
+		try {
+			List<String> sanfangIndexNames = rsService.getSanfangIndexNames();
 
+			if (sanfangIndexNames.contains(indexName)) {
+				rsp.setData(esService.searchClusters2(indexName, content, firstGroup, secondGroup, thirdGroup));
+				rsp.setStatu(true);
+			} else {
+				rsp.setStatu(false);
+				rsp.setMsg("不存在的索引");
+			}
 
-    /**
-     *@author heyang
-     *@param ${indexName}  索引名称
-     *@param ${firstGroup}  一级分类
-     *describe: 桶嵌套扁平化数据版本
-     */
-    @POST
-    @RequestMapping("/searchclusters4")
-    public BaseResponse searchClusters4(@RequestParam(value = "indexName") String indexName,
-                                        @RequestParam(value = "content") String content,
-                                        @RequestParam(value = "firstGroup") String firstGroup,
-                                        @RequestParam(value = "secondGroup") String secondGroup,
-                                        @RequestParam(value = "thirdGroup") String thirdGroup) {
-        BaseResponse rsp = new BaseResponse();
-        try {
-            List<String> sanfangIndexNames = rsService.getSanfangIndexNames();
+		} catch (Exception e) {
+			logger.error("searchClusters3 error happend: {}", e);
+			rsp = BaseRes.getErrorResponse();
+		}
+		return rsp;
 
-            if(sanfangIndexNames.contains(indexName)){
-                rsp.setData(esService.searchClusters2( indexName, content, firstGroup , secondGroup, thirdGroup));
-                rsp.setStatu(true);
-            }else{
-                rsp.setStatu(false);
-                rsp.setMsg("不存在的索引");
-            }
-
-
-        } catch (Exception e) {
-            logger.error("searchClusters3 error happend: {}", e);
-            rsp = BaseRes.getErrorResponse();
-        }
-        return rsp;
-
-    }
-
-
-
-
-
+	}
 }

@@ -15,15 +15,16 @@ import com.chaoxing.gsd.web.res.BaseResponse;
 
 /**
  * 登录，登出处理
+ * 
  * @author winsl
  *
  */
 @Controller
 @RequestMapping("/gsd")
 public class LoginInAndOutController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(LoginInAndOutController.class);
-	
+
 	@Autowired
 	private LoginInAndOutService loginInAndOutService;
 
@@ -31,12 +32,10 @@ public class LoginInAndOutController {
 	@RequestMapping("/login")
 	@ResponseBody
 	public BaseResponse login(@RequestParam(value = "username", required = true) String username,
-			@RequestParam(value = "password", required = false) String password)
-	{
+			@RequestParam(value = "password", required = false) String password) {
 		logger.info("user: {} is try to login.", username);
 		BaseResponse rsp = null;
-		if(null == password)
-		{
+		if (null == password) {
 			rsp = new BaseResponse();
 			rsp.setStatu(false);
 			rsp.setMsg("Password and vercode can't both empty!!!");

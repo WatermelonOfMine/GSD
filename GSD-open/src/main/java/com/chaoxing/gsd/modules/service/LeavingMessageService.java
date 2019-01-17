@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.chaoxing.gsd.config.PropertiesConf;
 import com.chaoxing.gsd.core.utils.DateUtil;
 import com.chaoxing.gsd.core.utils.MailUtil;
 import com.chaoxing.gsd.modules.entity.UserLeavingMessage;
@@ -34,7 +35,7 @@ public class LeavingMessageService {
 		{
 			int num = userLeavingMessageMapper.insertSelective(message);
 			
-			// 入库后再异步发邮件给gsd-inquiry@chaoxing.com
+			// 入库后再异步发邮件给系统邮箱
 			if(num == 1)
 			{
 				resetValue(message);
@@ -55,7 +56,7 @@ public class LeavingMessageService {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						MailUtil.sendEmail(MailUtil.properties, msg.toString(), "text/html;charset=gb2312", message.getTitle(), "gsd@chaoxing.com", MailUtil.GSD_INQUIRY_MAIL, MailUtil.CC_MAIL_TO);
+						MailUtil.sendEmail(PropertiesConf.properties, msg.toString(), "text/html;charset=gb2312", message.getTitle(), "gsd@chaoxing.com", PropertiesConf.GSD_INQUIRY_MAIL, PropertiesConf.CC_MAIL_TO);
 					}
 	            	
 	            }).start();

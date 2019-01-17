@@ -1,5 +1,9 @@
 package com.chaoxing.gsd.core.utils;
 
+import org.springframework.stereotype.Component;
+
+import com.chaoxing.gsd.config.PropertiesConf;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -9,11 +13,11 @@ import net.sf.ehcache.Element;
  * @author winsl
  *
  */
+@Component
 public class EhCacheUtils {
 
-
 	private final static CacheManager
-		cacheManager =   CacheManager.create(EhCacheUtils.class.getClassLoader().getResourceAsStream("ehcache.xml"));
+		cacheManager =   CacheManager.create(EhCacheUtils.class.getClassLoader().getResourceAsStream(PropertiesConf.ECACHE_CONF_FILE_NAME));
 
 	/**
 	 * 缓存名称

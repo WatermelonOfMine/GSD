@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.chaoxing.gsd.es.mapper.Biogref_DnbMapper" >
-  <resultMap id="BaseResultMap" type="com.chaoxing.gsd.es.model.Biogref_Dnb" >
+<mapper namespace="com.chaoxing.gsd.modules.mapper.Biogref_DnbMapper" >
+  <resultMap id="BaseResultMap" type="com.chaoxing.gsd.modules.entity.Biogref_Dnb" >
     <result column="person_id" property="personId" jdbcType="VARCHAR" />
     <result column="person_name" property="personName" jdbcType="VARCHAR" />
     <result column="born_year" property="bornYear" jdbcType="VARCHAR" />
@@ -15,7 +15,7 @@
     <result column="typeid" property="typeid" jdbcType="VARCHAR" />
     <result column="libid" property="libid" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="com.chaoxing.gsd.es.model.Biogref_Dnb" >
+  <insert id="insert" parameterType="com.chaoxing.gsd.modules.entity.Biogref_Dnb" >
     insert into biogref_dnb (person_id, person_name, born_year, 
       died_year, gender, dynasty, 
       jiguan, shengfen, shiqu, 
@@ -27,7 +27,7 @@
       #{lonLat,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR}, #{libid,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.chaoxing.gsd.es.model.Biogref_Dnb" >
+  <insert id="insertSelective" parameterType="com.chaoxing.gsd.modules.entity.Biogref_Dnb" >
     insert into biogref_dnb
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="personId != null" >
@@ -115,7 +115,7 @@
     select shiqu from biogref_dnb where shengfen=#{shengfen}
   </select>
 
-  <select id="selectCountByGis" resultType="Integer" parameterType="com.chaoxing.gsd.es.model.Gis">
+  <select id="selectCountByGis" resultType="Integer" parameterType="com.chaoxing.gsd.modules.entity.Gis">
     select count(*) from biogref_dnb where shengfen=#{province} and shiqu=#{city}
   </select>
 

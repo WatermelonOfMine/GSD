@@ -44,7 +44,7 @@ public class SSPController {
 
 	@Autowired
 	private DownloadIndexService downloadIndexService;
-	
+
 	@Autowired
 	private SearchESClusterService sec;
 
@@ -54,7 +54,7 @@ public class SSPController {
 	// 文献message_types字段限制条件：BK=图书，JN=期刊，DT=学位论文，CP=会议论文，PAT=专利，ST=标准，NP=报纸，TR=科技成果，年鉴=YB,法律法规=LAR,信息咨询=INF,案例=CAS
 	@SuppressWarnings("unused")
 	private static String[] message_types = { "BK", "DT", "JN", "CP", "PAT", "ST", "NP", "TR", "YB", "LAR", "INF",
-	"CAS" };
+			"CAS" };
 
 	// 用户保存网页document_type文档类型限制：webpage：邮件采集网页，literature文献
 	public static final List<String> DOCUMENT_TYPES = Arrays.asList(new String[] { "webpage", "literature" });

@@ -26,6 +26,7 @@ import com.chaoxing.gsd.web.res.BaseResponse;
 
 /**
  * 资源池处理
+ * 
  * @author winsl
  *
  */
@@ -38,13 +39,21 @@ public class ResourcePoolController {
 
 	/**
 	 * 符合查询接口
-	 * @param userid 用户id
-	 * @param type 资源类型
-	 * @param filename 资源名称
-	 * @param typedatetime 创建时间 0 升序 1倒叙
-	 * @param typefilesize 文件大小 0 升序 1倒叙
-	 * @param index 开始下标
-	 * @param limit 每页数目
+	 * 
+	 * @param userid
+	 *            用户id
+	 * @param type
+	 *            资源类型
+	 * @param filename
+	 *            资源名称
+	 * @param typedatetime
+	 *            创建时间 0 升序 1倒叙
+	 * @param typefilesize
+	 *            文件大小 0 升序 1倒叙
+	 * @param index
+	 *            开始下标
+	 * @param limit
+	 *            每页数目
 	 * @return
 	 */
 	@GET
@@ -57,64 +66,56 @@ public class ResourcePoolController {
 			@RequestParam(value = "typedatetime", required = false) Integer typedatetime,
 			@RequestParam(value = "typefilesize", required = false) Integer typefilesize,
 			@RequestParam(value = "index", required = true) Integer index,
-			@RequestParam(value = "limit", required = true) Integer limit){
+			@RequestParam(value = "limit", required = true) Integer limit) {
 		String file = ascOrDesc(filenamesort), time = ascOrDesc(typedatetime), size = ascOrDesc(typefilesize);
-		
+
 		Map<String, Object> para = new HashMap<String, Object>();
 		para.put("userid", userid);
 		para.put("type", type);
-		
+
 		para.put("filenamesort", filenamesort);
 		para.put("filename", filename);
-		
+
 		para.put("index", index);
 		para.put("limit", limit);
-		
-		if(filenamesort != null || typedatetime != null || typefilesize != null)
-		{
+
+		if (filenamesort != null || typedatetime != null || typefilesize != null) {
 			para.put("orderis", "true");
 		}
-		
+
 		String ordermessage = "";
-		if(filenamesort != null)
-		{
+		if (filenamesort != null) {
 			ordermessage = ordermessage.concat(" f.filename ").concat(file).concat(" , ");
 		}
-		if(typedatetime != null)
-		{
+		if (typedatetime != null) {
 			ordermessage = ordermessage.concat(" f.createtime ").concat(time).concat(" , ");
 		}
-		if(typefilesize != null)
-		{
+		if (typefilesize != null) {
 			ordermessage = ordermessage.concat(" f.filesize ").concat(size).concat(" , ");
 		}
-		
-		// 去除最后的[, ] 
-		if(ordermessage.length() > 0)
-		{
-			ordermessage = ordermessage.substring(0, ordermessage.length()-2);
+
+		// 去除最后的[, ]
+		if (ordermessage.length() > 0) {
+			ordermessage = ordermessage.substring(0, ordermessage.length() - 2);
 			para.put("ordermessage", ordermessage);
 		}
-		
+
 		BaseResponse rsp = resourcePoolService.compoundQuery(para);
 		return rsp;
 	}
-	
+
 	/**
 	 * 通过值判断是升序还是降序
-	 * @param num 0 升序 1倒叙
+	 * 
+	 * @param num
+	 *            0 升序 1倒叙
 	 * @return
 	 */
-	private String ascOrDesc(Integer num)
-	{
-		if(null != num)
-		{
-			if(0 == num)
-			{
+	private String ascOrDesc(Integer num) {
+		if (null != num) {
+			if (0 == num) {
 				return "asc";
-			}
-			else
-			{
+			} else {
 				return "desc";
 			}
 		}
@@ -122,12 +123,16 @@ public class ResourcePoolController {
 	}
 
 	/**
-	 * 通过文件名分页查询用户下
-	 * 据名称模糊匹配的所有文件
-	 * @param userid 用户id
-	 * @param filename 匹配名称
-	 * @param index 开始下标
-	 * @param limit 分页限制查询量
+	 * 通过文件名分页查询用户下 据名称模糊匹配的所有文件
+	 * 
+	 * @param userid
+	 *            用户id
+	 * @param filename
+	 *            匹配名称
+	 * @param index
+	 *            开始下标
+	 * @param limit
+	 *            分页限制查询量
 	 * @return
 	 */
 	@GET
@@ -136,7 +141,7 @@ public class ResourcePoolController {
 	public BaseResponse getFilesByName(@RequestParam(value = "userid", required = true) String userid,
 			@RequestParam(value = "filename", required = true) String filename,
 			@RequestParam(value = "index", required = true) Integer index,
-			@RequestParam(value = "limit", required = true) Integer limit){
+			@RequestParam(value = "limit", required = true) Integer limit) {
 		Map<String, Object> para = new HashMap<String, Object>();
 		para.put("userid", userid);
 		para.put("filename", filename);
@@ -148,17 +153,17 @@ public class ResourcePoolController {
 
 	/**
 	 * 根据文件id删除关联关系
+	 * 
 	 * @param fileids
 	 * @return
 	 */
 	@DELETE
 	@RequestMapping("/deleteFilesByIds")
 	@ResponseBody
-	public BaseResponse deleteFilesByIds(@RequestBody String req){
+	public BaseResponse deleteFilesByIds(@RequestBody String req) {
 		BaseResponse rsp = null;
 		JSONObject json = JSON.parseObject(req);
-		if(null == req || null == json)
-		{
+		if (null == req || null == json) {
 			rsp = new BaseResponse();
 			rsp.setStatu(false);
 			rsp.setMsg("deleteFilesByIds fail, parameter error.");
@@ -178,18 +183,19 @@ public class ResourcePoolController {
 
 	/**
 	 * 根据文件id修改文件名
+	 * 
 	 * @param fileids
 	 * @return
 	 */
 	@PUT
 	@RequestMapping("/updateFileNameById")
 	@ResponseBody
-	public BaseResponse updateFileNameById(@RequestParam(value = "fileid", required = true) Integer fileid, 
-			@RequestParam(value = "filenewname", required = false) String filenewname, 
+	public BaseResponse updateFileNameById(@RequestParam(value = "fileid", required = true) Integer fileid,
+			@RequestParam(value = "filenewname", required = false) String filenewname,
 			@RequestParam(value = "filenewurl", required = false) String filenewurl,
 			@RequestParam(value = "filenewsize", required = false) Long filenewsize,
 			@RequestParam(value = "newobjectid", required = false) String newobjectid,
-			@RequestParam(value = "newfilefrom", required = false) String newfilefrom){
+			@RequestParam(value = "newfilefrom", required = false) String newfilefrom) {
 		UserFileDetail para = new UserFileDetail();
 		para.setFileid(fileid);
 		para.setFilename(filenewname);
@@ -210,10 +216,15 @@ public class ResourcePoolController {
 
 	/**
 	 * 通过文件类型分页查询某类资源
-	 * @param userid 用户id
-	 * @param type 类型
-	 * @param index 开始下标
-	 * @param limit 分页限制查询量
+	 * 
+	 * @param userid
+	 *            用户id
+	 * @param type
+	 *            类型
+	 * @param index
+	 *            开始下标
+	 * @param limit
+	 *            分页限制查询量
 	 * @return
 	 */
 	@GET
@@ -222,7 +233,7 @@ public class ResourcePoolController {
 	public BaseResponse getFilesByType(@RequestParam(value = "userid", required = true) String userid,
 			@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "index", required = true) Integer index,
-			@RequestParam(value = "limit", required = true) Integer limit){
+			@RequestParam(value = "limit", required = true) Integer limit) {
 		Map<String, Object> para = new HashMap<String, Object>();
 		para.put("userid", userid);
 		para.put("type", type);
@@ -234,8 +245,10 @@ public class ResourcePoolController {
 
 	/**
 	 * 分页查询用户最近上传文件
+	 * 
 	 * @param userid
-	 * @param type 类型 0表示查最近创建文件 1表示查询最近编辑文件
+	 * @param type
+	 *            类型 0表示查最近创建文件 1表示查询最近编辑文件
 	 * @param index
 	 * @param limit
 	 * @return
@@ -246,7 +259,7 @@ public class ResourcePoolController {
 	public BaseResponse getFilesOfLatest(@RequestParam(value = "userid", required = true) String userid,
 			@RequestParam(value = "type", required = true) String type,
 			@RequestParam(value = "index", required = true) Integer index,
-			@RequestParam(value = "limit", required = true) Integer limit){
+			@RequestParam(value = "limit", required = true) Integer limit) {
 		Map<String, Object> para = new HashMap<String, Object>();
 		para.put("userid", userid);
 		para.put("type", type);
@@ -258,12 +271,19 @@ public class ResourcePoolController {
 
 	/**
 	 * 资源池数据录入
-	 * @param userid 用户id
-	 * @param filetype 文件类型（大类）1、文档 2、图片 3、视频 4、音频
-	 * @param filename 文件名称
-	 * @param fileurl 文件资源路径 
-	 * @param objectid 文件objectid 
-	 * @param filefrom 文件来源  1、中心云存储
+	 * 
+	 * @param userid
+	 *            用户id
+	 * @param filetype
+	 *            文件类型（大类）1、文档 2、图片 3、视频 4、音频
+	 * @param filename
+	 *            文件名称
+	 * @param fileurl
+	 *            文件资源路径
+	 * @param objectid
+	 *            文件objectid
+	 * @param filefrom
+	 *            文件来源 1、中心云存储
 	 * @return
 	 */
 	@POST
@@ -275,9 +295,9 @@ public class ResourcePoolController {
 			@RequestParam(value = "fileurl", required = true) String fileurl,
 			@RequestParam(value = "filesize", required = true) Long filesize,
 			@RequestParam(value = "objectid", required = false) String objectid,
-			@RequestParam(value = "filefrom", required = true) String filefrom){
+			@RequestParam(value = "filefrom", required = true) String filefrom) {
 		UserFileDetail para = new UserFileDetail();
-		para.setFiletype(filetype);		
+		para.setFiletype(filetype);
 		para.setFilename(filename);
 		para.setFileurl(fileurl);
 		para.setFilesize(filesize);
@@ -298,27 +318,25 @@ public class ResourcePoolController {
 		}
 		return rsp;
 	}
-	
+
 	/**
 	 * 关系批量处理
+	 * 
 	 * @param json
 	 * @return
 	 */
 	@POST
 	@RequestMapping("/insertPoolDataBatch")
 	@ResponseBody
-	public BaseResponse insertPoolDataBatch(@RequestBody String json){
+	public BaseResponse insertPoolDataBatch(@RequestBody String json) {
 		BaseResponse rsp = null;
 		List<UserFileDetail> allData = JSON.parseArray(json, UserFileDetail.class);
 		String userId = allData.get(0).getUserid();
-		if(null != allData && allData.size() > 0 && userId != null)
-		{
+		if (null != allData && allData.size() > 0 && userId != null) {
 			UserFileMain record = new UserFileMain();
 			record.setUserid(userId);
 			rsp = resourcePoolService.insertPoolDataBatch(allData, record);
-		}
-		else
-		{
+		} else {
 			rsp = new BaseResponse();
 			rsp.setStatu(false);
 			rsp.setMsg("insertPoolDataBatch fail, request body is empty.");
@@ -328,10 +346,12 @@ public class ResourcePoolController {
 
 	/**
 	 * 根据文件大小正反序分页查询
+	 * 
 	 * @param userid
 	 * @param index
 	 * @param limit
-	 * @param type 0 升序， 1降序
+	 * @param type
+	 *            0 升序， 1降序
 	 * @return
 	 */
 	@GET
@@ -340,7 +360,7 @@ public class ResourcePoolController {
 	public BaseResponse selectByFileSize(@RequestParam(value = "userid", required = true) String userid,
 			@RequestParam(value = "index", required = true) Integer index,
 			@RequestParam(value = "limit", required = true) Integer limit,
-			@RequestParam(value = "type", required = true) Integer type){
+			@RequestParam(value = "type", required = true) Integer type) {
 		BaseResponse rsp = null;
 		try {
 			rsp = resourcePoolService.selectByFileSize(userid, index, limit, type);
