@@ -93,11 +93,17 @@ public class SSPController {
 		return resp;
 	}
 
-	// 在（七个哈佛库/7个索引）指定多个索引库查找聚类（String[] indexnames，String content,String field)
-	// 参数说明：indexnames索引库数组：textref_zhonghuajingdian,textref_kanripo,textref_ctext,textref_cbta,biogref_dnb,biogref_ddbc,biogref_cbdb
-	// content:搜索内容，field：检索字段，传空值，则在所有字段检索
-	// 返回的聚类名称包含:
-	// "gender","born_year","died_year","dynasty","jiguan","author","edition","collection","notes"
+	/**
+	 * 在（七个哈佛库/7个索引）指定多个索引库查找聚类（String[] indexnames，String content,String field)
+	 * 参数说明：indexnames索引库数组：textref_zhonghuajingdian,textref_kanripo,textref_ctext,textref_cbta,biogref_dnb,biogref_ddbc,biogref_cbdb
+	 * content:搜索内容，field：检索字段，传空值，则在所有字段检索
+	 * 返回的聚类名称包含:
+	 * "gender","born_year","died_year","dynasty","jiguan","author","edition","collection","notes"
+	 * @param indexNames
+	 * @param content
+	 * @param field
+	 * @return
+	 */
 	@POST
 	@RequestMapping("/searchclusters2")
 	@ResponseBody
@@ -210,10 +216,12 @@ public class SSPController {
 			}
 			String fileName = request.getServletContext().getRealPath(path);
 			File file = new File(fileName);
+			
 			// 创建文件
 			if (!file.exists()) {
 				file.createNewFile();
 			}
+			
 			// 写入，下载,删除
 			if (downloadType == 1) {
 				downloadIndexService.writeris(list, file);
@@ -252,6 +260,7 @@ public class SSPController {
 		File file = new File(path);
 		response.setContentType("text/html;charset=utf-8");
 		FileReader reader = new FileReader(file);
+		
 		// 写出（字符缓冲流，只能写文字不能写图片）
 		PrintWriter out = response.getWriter();
 		char buffer[] = new char[1024];
@@ -259,6 +268,7 @@ public class SSPController {
 		while ((len = reader.read(buffer)) != -1) {
 			out.write(buffer, 0, len);
 		}
+		
 		// 释放资源
 		reader.close();
 		out.flush();

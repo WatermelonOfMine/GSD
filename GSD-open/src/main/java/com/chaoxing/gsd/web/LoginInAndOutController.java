@@ -28,6 +28,12 @@ public class LoginInAndOutController {
 	@Autowired
 	private LoginInAndOutService loginInAndOutService;
 
+	/**
+	 * 登录验证
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	@POST
 	@RequestMapping("/login")
 	@ResponseBody

@@ -633,8 +633,21 @@ public class RsService {
 	}
 
 	// 用户提交库相关操作
+	@Transactional
 	public void insertGsdindex(GsdIndex gsdIndex) {
 		gsdIndexMapper.insertSelective(gsdIndex);
+		
+		// TODO 将库信息直接入gsdlib
+		GsdLib record = new GsdLib();
+		record.setCategoryid("Textref");
+		record.setSelfcategoryname("系统库");
+		record.setLibid(gsdIndex.getName());
+		record.setNamecha(gsdIndex.getDomainname());
+		record.setNameeng(" ");
+		record.setType(2);
+		record.setWiki(gsdIndex.getWiki());
+		
+		gsdLibMapper.insertSelective(record);
 	}
 
 	public PageInfo<GsdIndex> SelectUserIndex(String userId, Integer pageNum, Integer pageSize) {

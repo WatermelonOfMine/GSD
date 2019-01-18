@@ -80,9 +80,12 @@ public class RsController {
 		return rsp;
 	}
 
-	// 库和类功能
-
-	// 用户添加自定义库(参数String userid，String categoryname)
+	/**
+	 * 录入库信息
+	 * @param userId
+	 * @param categoryName
+	 * @return
+	 */
 	@POST
 	@RequestMapping("/insertcategory")
 	@ResponseBody
@@ -98,7 +101,13 @@ public class RsController {
 		return rsp;
 	}
 
-	// 用户修改自定义库(参数String userid，String categoryid,String categoryname)
+	/**
+	 * 修改库信息
+	 * @param userId
+	 * @param categoryid
+	 * @param categoryname
+	 * @return
+	 */
 	@POST
 	@RequestMapping("/renamecategory")
 	@ResponseBody
@@ -116,7 +125,12 @@ public class RsController {
 
 	}
 
-	// 用户删除自定义库(参数String userid，String categoryid)
+	/**
+	 * 删除库信息
+	 * @param userId
+	 * @param categoryid
+	 * @return
+	 */
 	@PostMapping("/delcategory")
 	@ResponseBody
 	public BaseResponse delCategory(@RequestParam(value = "userid", required = true) String userId,
@@ -132,7 +146,11 @@ public class RsController {
 		return rsp;
 	}
 
-	// 根据用户id查询该用户所有的自定义类(参数String userid)
+	/**
+	 * 查询用户自定义搜索标签信息
+	 * @param userid
+	 * @return
+	 */
 	@GET
 	@RequestMapping("/getdefinedcategory")
 	@ResponseBody
@@ -152,7 +170,10 @@ public class RsController {
 		return rsp;
 	}
 
-	// 查询所有默认库(参数 无)
+	/**
+	 * 查询所有默认库(参数 无)
+	 * @return
+	 */
 	@GET
 	@RequestMapping("/getalldefaultlib")
 	@ResponseBody
@@ -169,7 +190,11 @@ public class RsController {
 		return rsp;
 	}
 
-	// 保存用户点击的自定义库和默认库（参数String userid,String categoryid1,String categoryid2）
+	/**
+	 * 保存用户点击的自定义库和默认库（参数String userid,String categoryid1,String categoryid2）
+	 * @param gsd
+	 * @return
+	 */
 	@PostMapping("/insertgsd")
 	@ResponseBody
 	public BaseResponse insertGsd(Gsd gsd) {
@@ -183,7 +208,11 @@ public class RsController {
 		return rsp;
 	}
 
-	// 根据用户自定义库查询绑定的所有默认库（参数String userid,String categoryid1）
+	/**
+	 * 根据用户自定义库查询绑定的所有默认库（参数String userid,String categoryid1）
+	 * @param gsd
+	 * @return
+	 */
 	@PostMapping("/getgsdbydefinedcategory")
 	@ResponseBody
 	public BaseResponse getGsd(Gsd gsd) {
@@ -199,7 +228,11 @@ public class RsController {
 		return rsp;
 	}
 
-	// 删除用户点击自定义库和默认库（参数String userid,String categoryid1,String categoryid2）
+	/**
+	 * 删除用户点击自定义库和默认库（参数String userid,String categoryid1,String categoryid2）
+	 * @param gsd
+	 * @return
+	 */
 	@PostMapping("/delgsd")
 	@ResponseBody
 	public BaseResponse delGsd(Gsd gsd) {
@@ -214,10 +247,12 @@ public class RsController {
 		return rsp;
 	}
 
-	// 浏览记录操作
-
-	// 保存用户浏览记录(参数String userid,String content,String title1,String
-	// title2,String url)
+	/**
+	 * 录入浏览记录操作
+	 * @param request
+	 * @param searchrecord
+	 * @return
+	 */
 	@PostMapping("/insertsearchrecord")
 	@ResponseBody
 	public BaseResponse insertSearchRecord(HttpServletRequest request, SearchRecord searchrecord) {
@@ -253,7 +288,11 @@ public class RsController {
 		return rsp;
 	}
 
-	// 清空指定用户的所有浏览记录(参数String userid)
+	/**
+	 * 清空指定用户的所有浏览记录(参数String userid)
+	 * @param userId
+	 * @return
+	 */
 	@PostMapping("/delsearchrecordbyuserid")
 	@ResponseBody
 	public BaseResponse delSearchRecordByUserId(@RequestParam(value = "userid", required = true) String userId) {
@@ -268,7 +307,12 @@ public class RsController {
 		return rsp;
 	}
 
-	// 清空用户指定的搜索内容相关的所有浏览记录(参数String userid,String content)
+	/**
+	 * 清空用户指定的搜索内容相关的所有浏览记录(参数String userid,String content)
+	 * @param userId
+	 * @param content
+	 * @return
+	 */
 	@PostMapping("/delsearchrecordbycontent")
 	@ResponseBody
 	public BaseResponse delSearchRecordByContent(@RequestParam(value = "userid", required = true) String userId,
@@ -325,7 +369,6 @@ public class RsController {
 		return rsp;
 	}
 
-	// 用户设置
 	/**
 	 * @author heyang
 	 * @param ${userid}
@@ -425,7 +468,6 @@ public class RsController {
 		return rsp;
 	}
 
-	// 搜索内容相关功能
 	/**
 	 * @author heyang
 	 * @param ${userid}
@@ -523,7 +565,6 @@ public class RsController {
 		return rsp;
 	}
 
-	// 用户提交库信息相关操作
 	/**
 	 * @author heyang
 	 * @param ${name}
