@@ -38,17 +38,39 @@ public class LoginInAndOutController {
 	@RequestMapping("/login")
 	@ResponseBody
 	public BaseResponse login(@RequestParam(value = "username", required = true) String username,
-			@RequestParam(value = "password", required = false) String password) {
+			@RequestParam(value = "password", required = true) String password) {
 		logger.info("user: {} is try to login.", username);
 		BaseResponse rsp = null;
 		if (null == password) {
 			rsp = new BaseResponse();
 			rsp.setStatu(false);
-			rsp.setMsg("Password and vercode can't both empty!!!");
+			rsp.setMsg("Password can't both empty!!!");
 			return rsp;
 		}
 		rsp = loginInAndOutService.login(username, password);
 		return rsp;
 	}
 
+	/**
+	 * 注册账号
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	@POST
+	@RequestMapping("/register")
+	@ResponseBody
+	public BaseResponse register(@RequestParam(value = "username", required = true) String username,
+			@RequestParam(value = "password", required = true) String password) {
+		logger.info("user: {} is to register.", username);
+		BaseResponse rsp = null;
+		if (null == password) {
+			rsp = new BaseResponse();
+			rsp.setStatu(false);
+			rsp.setMsg("Password can't both empty!!!");
+			return rsp;
+		}
+		rsp = loginInAndOutService.register(username, password);
+		return rsp;
+	}
 }

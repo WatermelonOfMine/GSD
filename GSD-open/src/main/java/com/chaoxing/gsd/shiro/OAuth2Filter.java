@@ -59,6 +59,7 @@ public class OAuth2Filter extends FormAuthenticationFilter {
 		WHITE_URL.add("/gsd/search2");
 		WHITE_URL.add("/gsd/definedsearch");
 		WHITE_URL.add("/gsd/login");
+		WHITE_URL.add("/gsd/register");
 		WHITE_URL.add("/gsd/searchclusters");
 		WHITE_URL.add("/gsd/searchallcluster");
 
